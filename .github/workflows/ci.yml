@@ -1,0 +1,33 @@
+name: ci
+
+on: [push, pull_request]
+
+jobs:
+  test:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        # windows-latest isn't supported by node-gyp on all Node.js versions
+        os: [ubuntu-latest, macos-latest, windows-2019]
+        node-version: [12, 14, 16, 18]
+    steps:
+    - uses: actions/checkout@v2
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+    - run: npm install
+    - run: npm test
+
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: actions/setup-node@v1
+    - run: npm install
+    - run: npm run lint
+    - uses: Bedzior/run-cppcheck@v1.0.0
+      with:
+        enabled checks: all
+        enable inconclusive: true
+        generate report: true

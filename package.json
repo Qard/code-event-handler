@@ -1,0 +1,19 @@
+{
+  "name": "code-event-handler",
+  "description": "JavaScript interface to v8::CodeEventHandler",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Stephen Belanger <stephen.belanger@datadoghq.com>",
+  "license": "MIT",
+  "gypfile": true,
+  "scripts": {
+    "rebuild": "node-gyp rebuild --jobs=max",
+    "lint": "standard",
+    "pretest": "npm run rebuild",
+    "test": "node test.js"
+  },
+  "dependencies": {
+    "bindings": "^1.5.0",
+    "standard": "^16.0.4"
+  }
+}
